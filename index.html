@@ -13,8 +13,9 @@
     <!-- Settings Button -->
     <button class="settings-btn" id="settingsBtn" aria-label="Settings">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="3"></circle>
-            <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"></path>
+            <circle cx="12" cy="12" r="2"></circle>
+            <circle cx="12" cy="4" r="2"></circle>
+            <circle cx="12" cy="20" r="2"></circle>
         </svg>
     </button>
 
@@ -87,6 +88,7 @@
                         </label>
                     </div>
                 </div>
+                
                 <div class="setting-group">
                     <label class="setting-label">Theme</label>
                     <div class="theme-options">
@@ -105,6 +107,146 @@
                         <button class="theme-option green-theme" data-theme="green">
                             <div class="theme-preview green-preview"></div>
                             <span>Green</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label class="setting-label">Background</label>
+                    <div class="background-options">
+                        <div class="background-type-selector">
+                            <label class="radio-option">
+                                <input type="radio" name="backgroundType" value="theme" checked>
+                                <span class="radio-custom"></span>
+                                Theme Default
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="backgroundType" value="custom">
+                                <span class="radio-custom"></span>
+                                Custom Image
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="backgroundType" value="color">
+                                <span class="radio-custom"></span>
+                                Solid Color
+                            </label>
+                        </div>
+                        <div class="background-upload" id="backgroundUpload" style="display: none;">
+                            <input type="file" id="backgroundFile" accept="image/*">
+                            <label for="backgroundFile" class="file-upload-btn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7,10 12,15 17,10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                Upload Image
+                            </label>
+                        </div>
+                        <div class="background-color" id="backgroundColorPicker" style="display: none;">
+                            <input type="color" id="backgroundColor" value="#ffffff">
+                            <label for="backgroundColor">Background Color</label>
+                        </div>
+                        <div class="background-controls" id="backgroundControls" style="display: none;">
+                            <div class="control-group">
+                                <label for="backgroundSize">Size</label>
+                                <select id="backgroundSize">
+                                    <option value="cover">Cover</option>
+                                    <option value="contain">Contain</option>
+                                    <option value="auto">Auto</option>
+                                </select>
+                            </div>
+                            <div class="control-group">
+                                <label for="backgroundPosition">Position</label>
+                                <select id="backgroundPosition">
+                                    <option value="center">Center</option>
+                                    <option value="top">Top</option>
+                                    <option value="bottom">Bottom</option>
+                                    <option value="left">Left</option>
+                                    <option value="right">Right</option>
+                                </select>
+                            </div>
+                            <div class="control-group">
+                                <label for="backgroundOpacity">Opacity</label>
+                                <input type="range" id="backgroundOpacity" min="0" max="100" value="100">
+                                <span id="opacityValue">100%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label class="setting-label">Layout & Appearance</label>
+                    <div class="appearance-controls">
+                        <div class="control-group">
+                            <label for="gridColumns">Bookmark Columns</label>
+                            <input type="range" id="gridColumns" min="3" max="8" value="6">
+                            <span id="columnsValue">6</span>
+                        </div>
+                        <div class="control-group">
+                            <label for="borderRadius">Border Radius</label>
+                            <input type="range" id="borderRadius" min="0" max="20" value="8">
+                            <span id="radiusValue">8px</span>
+                        </div>
+                        <div class="control-group">
+                            <label for="animationSpeed">Animation Speed</label>
+                            <select id="animationSpeed">
+                                <option value="0.1s">Fast</option>
+                                <option value="0.3s" selected>Normal</option>
+                                <option value="0.5s">Slow</option>
+                                <option value="0s">None</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label class="setting-label">Typography</label>
+                    <div class="typography-controls">
+                        <div class="control-group">
+                            <label for="fontFamily">Font Family</label>
+                            <select id="fontFamily">
+                                <option value="Inter">Inter</option>
+                                <option value="Arial">Arial</option>
+                                <option value="Helvetica">Helvetica</option>
+                                <option value="Georgia">Georgia</option>
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Courier New">Courier New</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label for="fontSize">Font Size</label>
+                            <input type="range" id="fontSize" min="12" max="20" value="16">
+                            <span id="fontSizeValue">16px</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label class="setting-label">Data Management</label>
+                    <div class="data-controls">
+                        <button class="btn-secondary" id="exportSettings">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17,8 12,3 7,8"></polyline>
+                                <line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                            Export Settings
+                        </button>
+                        <input type="file" id="importSettings" accept=".json" style="display: none;">
+                        <button class="btn-secondary" id="importSettingsBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7,10 12,15 17,10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Import Settings
+                        </button>
+                        <button class="btn-danger" id="resetSettings">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="1,4 1,10 7,10"></polyline>
+                                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                            </svg>
+                            Reset to Defaults
                         </button>
                     </div>
                 </div>
@@ -177,7 +319,7 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script-enhanced.js"></script>
 </body>
 </html>
 
