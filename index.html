@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Settings Button -->
     <button class="settings-btn" id="settingsBtn" aria-label="Settings">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="2"></circle>
@@ -18,14 +19,9 @@
         </svg>
     </button>
 
-    <button class="russian-hub-btn" id="russianHubBtn" aria-label="Russian Learning Hub">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-        </svg>
-    </button>
-
+    <!-- Main Container -->
     <div class="container">
+        <!-- Header with Search -->
         <header class="header">
             <div class="search-container">
                 <div class="search-wrapper">
@@ -44,6 +40,7 @@
             </div>
         </header>
 
+        <!-- Bookmarks Section -->
         <main class="main-content">
             <section class="bookmarks-section">
                 <div class="bookmarks-header">
@@ -57,11 +54,13 @@
                     </button>
                 </div>
                 <div class="bookmarks-grid" id="bookmarksGrid">
+                    <!-- Bookmarks will be dynamically added here -->
                 </div>
             </section>
         </main>
     </div>
 
+    <!-- Settings Modal -->
     <div class="modal-overlay" id="settingsModal">
         <div class="modal">
             <div class="modal-header">
@@ -255,6 +254,7 @@
         </div>
     </div>
 
+    <!-- Add Bookmark Modal -->
     <div class="modal-overlay" id="addBookmarkModal">
         <div class="modal">
             <div class="modal-header">
@@ -285,6 +285,7 @@
         </div>
     </div>
 
+    <!-- Edit Bookmark Modal -->
     <div class="modal-overlay" id="editBookmarkModal">
         <div class="modal">
             <div class="modal-header">
@@ -314,79 +315,6 @@
                         </div>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="russian-hub-overlay" id="russianHubOverlay">
-        <div class="russian-hub-menu">
-            <div class="russian-hub-header">
-                <h2>Russian Learning Hub</h2>
-                <button class="close-btn" id="closeRussianHubBtn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            </div>
-            
-            <div class="russian-hub-tabs">
-                <button class="hub-tab active" data-tab="alphabet">Alphabet</button>
-                <button class="hub-tab" data-tab="flashcards">Flashcards</button>
-                <button class="hub-tab" data-tab="examples">Examples</button>
-            </div>
-            
-            <div class="russian-hub-content">
-                <div class="hub-tab-content active" id="alphabet-tab">
-                    <div class="alphabet-grid" id="alphabetGrid">
-                    </div>
-                </div>
-                
-                <div class="hub-tab-content" id="flashcards-tab">
-                    <div class="flashcard-container">
-                        <div class="flashcard" id="currentFlashcard">
-                            <div class="flashcard-front">
-                                <div class="flashcard-word" id="flashcardWord">Click to start</div>
-                                <div class="flashcard-pronunciation" id="flashcardPronunciation"></div>
-                            </div>
-                            <div class="flashcard-back">
-                                <div class="flashcard-translation" id="flashcardTranslation"></div>
-                                <div class="flashcard-example" id="flashcardExample"></div>
-                            </div>
-                        </div>
-                        <div class="flashcard-controls">
-                            <button class="btn-secondary" id="prevFlashcard">Previous</button>
-                            <button class="btn-primary" id="flipFlashcard">Flip</button>
-                            <button class="btn-secondary" id="nextFlashcard">Next</button>
-                        </div>
-                        <div class="mastery-controls">
-                            <button class="btn-success" id="masteredBtn">I've mastered this!</button>
-                            <button class="btn-warning" id="needPracticeBtn">Need more practice</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="hub-tab-content" id="examples-tab">
-                    <div class="examples-list" id="examplesList">
-                    </div>
-                </div>
-            </div>
-            
-            <div class="progress-section">
-                <h3>Your Progress</h3>
-                <div class="progress-stats">
-                    <div class="stat-item">
-                        <span class="stat-number" id="masteredCount">0</span>
-                        <span class="stat-label">Mastered</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="totalCount">0</span>
-                        <span class="stat-label">Total</span>
-                    </div>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
             </div>
         </div>
     </div>
