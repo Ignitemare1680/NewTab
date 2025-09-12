@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Tab</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Settings Button -->
+    <button class="settings-btn" id="settingsBtn" aria-label="Settings">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="2"></circle>
+            <circle cx="12" cy="4" r="2"></circle>
+            <circle cx="12" cy="20" r="2"></circle>
+        </svg>
+    </button>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header with Search -->
+        <header class="header">
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search the web..." autocomplete="off">
+                    <button class="search-engine-btn" id="searchEngineBtn">
+                        <span id="searchEngineText">Google</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Bookmarks Section -->
+        <main class="main-content">
+            <section class="bookmarks-section">
+                <div class="bookmarks-header">
+                    <h2>Quick Access</h2>
+                    <button class="add-bookmark-btn" id="addBookmarkBtn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Add Site
+                    </button>
+                </div>
+                <div class="bookmarks-grid" id="bookmarksGrid">
+                    <!-- Bookmarks will be dynamically added here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Settings</h3>
+                <button class="close-btn" id="closeSettingsBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="setting-group">
+                    <label class="setting-label">Search Engine</label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="searchEngine" value="google" checked>
+                            <span class="radio-custom"></span>
+                            Google
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="searchEngine" value="bing">
+                            <span class="radio-custom"></span>
+                            Bing
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <label class="setting-label">Theme</label>
+                    <div class="theme-options">
+                        <button class="theme-option light-theme" data-theme="light">
+                            <div class="theme-preview light-preview"></div>
+                            <span>Light</span>
+                        </button>
+                        <button class="theme-option dark-theme" data-theme="dark">
+                            <div class="theme-preview dark-preview"></div>
+                            <span>Dark</span>
+                        </button>
+                        <button class="theme-option gradient-theme" data-theme="gradient">
+                            <div class="theme-preview gradient-preview"></div>
+                            <span>Gradient</span>
+                        </button>
+                        <button class="theme-option green-theme" data-theme="green">
+                            <div class="theme-preview green-preview"></div>
+                            <span>Green</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label class="setting-label">Background</label>
+                    <div class="background-options">
+                        <div class="background-type-selector">
+                            <label class="radio-option">
+                                <input type="radio" name="backgroundType" value="theme" checked>
+                                <span class="radio-custom"></span>
+                                Theme Default
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="backgroundType" value="custom">
+                                <span class="radio-custom"></span>
+                                Custom Image
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="backgroundType" value="color">
+                                <span class="radio-custom"></span>
+                                Solid Color
+                            </label>
+                        </div>
+                        <div class="background-upload" id="backgroundUpload" style="display: none;">
+                            <input type="file" id="backgroundFile" accept="image/*">
+                            <label for="backgroundFile" class="file-upload-btn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7,10 12,15 17,10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                Upload Image
+                            </label>
+                        </div>
+                        <div class="background-color" id="backgroundColorPicker" style="display: none;">
+                            <input type="color" id="backgroundColor" value="#ffffff">
+                            <label for="backgroundColor">Background Color</label>
+                        </div>
+                        <div class="background-controls" id="backgroundControls" style="display: none;">
+                            <div class="control-group">
+                                <label for="backgroundSize">Size</label>
+                                <select id="backgroundSize">
+                                    <option value="cover">Cover</option>
+                                    <option value="contain">Contain</option>
+                                    <option value="auto">Auto</option>
+                                </select>
+                            </div>
+                            <div class="control-group">
+                                <label for="backgroundPosition">Position</label>
+                                <select id="backgroundPosition">
+                                    <option value="center">Center</option>
+                                    <option value="top">Top</option>
+                                    <option value="bottom">Bottom</option>
+                                    <option value="left">Left</option>
+                                    <option value="right">Right</option>
+                                </select>
+                            </div>
+                            <div class="control-group">
+                                <label for="backgroundOpacity">Opacity</label>
+                                <input type="range" id="backgroundOpacity" min="0" max="100" value="100">
+                                <span id="opacityValue">100%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label class="setting-label">Layout & Appearance</label>
+                    <div class="appearance-controls">
+                        <div class="control-group">
+                            <label for="gridColumns">Bookmark Columns</label>
+                            <input type="range" id="gridColumns" min="3" max="8" value="6">
+                            <span id="columnsValue">6</span>
+                        </div>
+                        <div class="control-group">
+                            <label for="borderRadius">Border Radius</label>
+                            <input type="range" id="borderRadius" min="0" max="20" value="8">
+                            <span id="radiusValue">8px</span>
+                        </div>
+                        <div class="control-group">
+                            <label for="animationSpeed">Animation Speed</label>
+                            <select id="animationSpeed">
+                                <option value="0.1s">Fast</option>
+                                <option value="0.3s" selected>Normal</option>
+                                <option value="0.5s">Slow</option>
+                                <option value="0s">None</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label class="setting-label">Typography</label>
+                    <div class="typography-controls">
+                        <div class="control-group">
+                            <label for="fontFamily">Font Family</label>
+                            <select id="fontFamily">
+                                <option value="Inter">Inter</option>
+                                <option value="Arial">Arial</option>
+                                <option value="Helvetica">Helvetica</option>
+                                <option value="Georgia">Georgia</option>
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Courier New">Courier New</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label for="fontSize">Font Size</label>
+                            <input type="range" id="fontSize" min="12" max="20" value="16">
+                            <span id="fontSizeValue">16px</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label class="setting-label">Data Management</label>
+                    <div class="data-controls">
+                        <button class="btn-secondary" id="exportSettings">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17,8 12,3 7,8"></polyline>
+                                <line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                            Export Settings
+                        </button>
+                        <input type="file" id="importSettings" accept=".json" style="display: none;">
+                        <button class="btn-secondary" id="importSettingsBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7,10 12,15 17,10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Import Settings
+                        </button>
+                        <button class="btn-danger" id="resetSettings">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="1,4 1,10 7,10"></polyline>
+                                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                            </svg>
+                            Reset to Defaults
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Bookmark Modal -->
+    <div class="modal-overlay" id="addBookmarkModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Add Bookmark</h3>
+                <button class="close-btn" id="closeAddBookmarkBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-content">
+                <form id="addBookmarkForm">
+                    <div class="form-group">
+                        <label for="bookmarkName">Name</label>
+                        <input type="text" id="bookmarkName" placeholder="Enter site name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookmarkUrl">URL</label>
+                        <input type="url" id="bookmarkUrl" placeholder="https://example.com" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelAddBookmark">Cancel</button>
+                        <button type="submit" class="btn-primary">Add Bookmark</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Bookmark Modal -->
+    <div class="modal-overlay" id="editBookmarkModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Edit Bookmark</h3>
+                <button class="close-btn" id="closeEditBookmarkBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-content">
+                <form id="editBookmarkForm">
+                    <div class="form-group">
+                        <label for="editBookmarkName">Name</label>
+                        <input type="text" id="editBookmarkName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editBookmarkUrl">URL</label>
+                        <input type="url" id="editBookmarkUrl" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-danger" id="deleteBookmark">Delete</button>
+                        <div class="form-actions-right">
+                            <button type="button" class="btn-secondary" id="cancelEditBookmark">Cancel</button>
+                            <button type="submit" class="btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script-enhanced.js"></script>
+</body>
+</html>
+
