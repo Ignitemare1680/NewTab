@@ -606,7 +606,6 @@ class NewTabPage {
         }
     }
 
-    // Notes methods
     saveNotes() {
         localStorage.setItem('newTabNotes', JSON.stringify(this.notes));
     }
@@ -701,7 +700,6 @@ class NewTabPage {
         const now = new Date().toISOString();
 
         if (this.editingNoteId) {
-            // Edit existing note
             const noteIndex = this.notes.findIndex(n => n.id === this.editingNoteId);
             if (noteIndex !== -1) {
                 this.notes[noteIndex] = {
@@ -712,7 +710,6 @@ class NewTabPage {
                 };
             }
         } else {
-            // Create new note
             const newNote = {
                 id: Date.now().toString(),
                 title: noteTitle,
