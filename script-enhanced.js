@@ -30,12 +30,16 @@ class NewTabPage {
         this.bookmarks = [];
         this.editingBookmarkId = null;
         
+        this.notes = [];
+        this.editingNoteId = null;
+        
         this.init();
     }
     
     init() {
         this.loadSettings();
         this.loadBookmarks();
+        this.loadNotes();
         this.bindEvents();
         this.applyAllSettings();
         this.focusSearchInput();
@@ -63,6 +67,28 @@ class NewTabPage {
         
         settingsBtn.addEventListener('click', () => this.openModal('settingsModal'));
         closeSettingsBtn.addEventListener('click', () => this.closeModal('settingsModal'));
+
+        // Notes events
+        const notesBtn = document.getElementById('notesBtn');
+        const notesModal = document.getElementById('notesModal');
+        const closeNotesBtn = document.getElementById('closeNotesBtn');
+        
+        notesBtn.addEventListener('click', () => this.openNotesModal());
+        closeNotesBtn.addEventListener('click', () => this.closeModal('notesModal'));
+
+        const createNoteBtn = document.getElementById('createNoteBtn');
+        createNoteBtn.addEventListener('click', () => this.openNoteEditor());
+
+        const noteEditorModal = document.getElementById('noteEditorModal');
+        const closeNoteEditorBtn = document.getElementById('closeNoteEditorBtn');
+        const cancelNoteBtn = document.getElementById('cancelNoteBtn');
+        const deleteNoteBtn = document.getElementById('deleteNoteBtn');
+        const noteEditorForm = document.getElementById('noteEditorForm');
+
+        closeNoteEditorBtn.addEventListener('click', () => this.closeModal('noteEditorModal'));
+        cancelNoteBtn.addEventListener('click', () => this.closeModal('noteEditorModal'));
+        deleteNoteBtn.addEventListener('click', () => this.deleteNote());
+        noteEditorForm.addEventListener('submit', (e) => this.saveNote(e));
      
         const searchEngineRadios = document.querySelectorAll('input[name="searchEngine"]');
         searchEngineRadios.forEach(radio => {
@@ -578,6 +604,145 @@ class NewTabPage {
             console.warn('Failed to load bookmarks:', e);
             this.bookmarks = [];
         }
+    }
+
+    // Notes methods
+    saveNotes() {
+        localStorage.setItem('newTabNotes', JSON.stringify(this.notes));
+    }
+    
+    loadNotes() {
+        try {
+            this.notes = JSON.parse(localStorage.getItem('newTabNotes') || '[]');
+        } catch (e) {
+            console.warn('Failed to load notes:', e);
+            this.notes = [];
+        }
+    }
+
+    openNotesModal() {
+        this.renderNotes();
+        this.openModal('notesModal');
+    }
+
+    renderNotes() {
+        const notesList = document.getElementById('notesList');
+        
+        if (this.notes.length === 0) {
+            notesList.innerHTML = `
+                <div class="empty-notes">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14,2 14,8 20,8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                    </svg>
+                    <h4>No notes yet</h4>
+                    <p>Click "Create New Note" to get started</p>
+                </div>
+            `;
+            return;
+        }
+
+        notesList.innerHTML = this.notes.map(note => `
+            <div class="note-item" onclick="window.newTabPage.editNote('${note.id}')">
+                <div class="note-title">${this.escapeHtml(note.title)}</div>
+                <div class="note-preview">${this.escapeHtml(note.content)}</div>
+                <div class="note-meta">
+                    <span class="note-date">${new Date(note.updatedAt).toLocaleDateString()}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    openNoteEditor(noteId = null) {
+        this.editingNoteId = noteId;
+        const modal = document.getElementById('noteEditorModal');
+        const title = document.getElementById('noteEditorTitle');
+        const noteTitle = document.getElementById('noteTitle');
+        const noteContent = document.getElementById('noteContent');
+        const deleteBtn = document.getElementById('deleteNoteBtn');
+
+        if (noteId) {
+            const note = this.notes.find(n => n.id === noteId);
+            if (note) {
+                title.textContent = 'Edit Note';
+                noteTitle.value = note.title;
+                noteContent.value = note.content;
+                deleteBtn.style.display = 'block';
+            }
+        } else {
+            title.textContent = 'New Note';
+            noteTitle.value = '';
+            noteContent.value = '';
+            deleteBtn.style.display = 'none';
+        }
+
+        this.closeModal('notesModal');
+        this.openModal('noteEditorModal');
+        setTimeout(() => noteTitle.focus(), 100);
+    }
+
+    editNote(noteId) {
+        this.openNoteEditor(noteId);
+    }
+
+    saveNote(e) {
+        e.preventDefault();
+        
+        const noteTitle = document.getElementById('noteTitle').value.trim();
+        const noteContent = document.getElementById('noteContent').value.trim();
+        
+        if (!noteTitle || !noteContent) {
+            alert('Please fill in both title and content');
+            return;
+        }
+
+        const now = new Date().toISOString();
+
+        if (this.editingNoteId) {
+            // Edit existing note
+            const noteIndex = this.notes.findIndex(n => n.id === this.editingNoteId);
+            if (noteIndex !== -1) {
+                this.notes[noteIndex] = {
+                    ...this.notes[noteIndex],
+                    title: noteTitle,
+                    content: noteContent,
+                    updatedAt: now
+                };
+            }
+        } else {
+            // Create new note
+            const newNote = {
+                id: Date.now().toString(),
+                title: noteTitle,
+                content: noteContent,
+                createdAt: now,
+                updatedAt: now
+            };
+            this.notes.unshift(newNote);
+        }
+
+        this.saveNotes();
+        this.closeModal('noteEditorModal');
+        this.openNotesModal();
+    }
+
+    deleteNote() {
+        if (!this.editingNoteId) return;
+        
+        if (confirm('Are you sure you want to delete this note?')) {
+            this.notes = this.notes.filter(n => n.id !== this.editingNoteId);
+            this.saveNotes();
+            this.closeModal('noteEditorModal');
+            this.openNotesModal();
+        }
+    }
+
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
     }
 }
 
