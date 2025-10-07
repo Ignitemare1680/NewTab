@@ -10,14 +10,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Settings Button -->
-    <button class="settings-btn" id="settingsBtn" aria-label="Settings">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="2"></circle>
-            <circle cx="12" cy="4" r="2"></circle>
-            <circle cx="12" cy="20" r="2"></circle>
-        </svg>
-    </button>
+    <!-- Top Navigation Buttons -->
+    <div class="top-nav">
+        <button class="nav-btn" id="notesBtn" aria-label="Notes">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14,2 14,8 20,8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10,9 9,9 8,9"></polyline>
+            </svg>
+        </button>
+        <button class="nav-btn" id="settingsBtn" aria-label="Settings">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="2"></circle>
+                <circle cx="12" cy="4" r="2"></circle>
+                <circle cx="12" cy="20" r="2"></circle>
+            </svg>
+        </button>
+    </div>
 
     <!-- Main Container -->
     <div class="container">
@@ -312,6 +323,69 @@
                         <div class="form-actions-right">
                             <button type="button" class="btn-secondary" id="cancelEditBookmark">Cancel</button>
                             <button type="submit" class="btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notes Modal -->
+    <div class="modal-overlay" id="notesModal">
+        <div class="modal notes-modal">
+            <div class="modal-header">
+                <h3>Personal Notes</h3>
+                <button class="close-btn" id="closeNotesBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-content notes-content">
+                <div class="notes-header">
+                    <button class="btn-primary" id="createNoteBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Create New Note
+                    </button>
+                </div>
+                <div class="notes-list" id="notesList">
+                    <!-- Notes will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Note Editor Modal -->
+    <div class="modal-overlay" id="noteEditorModal">
+        <div class="modal note-editor-modal">
+            <div class="modal-header">
+                <h3 id="noteEditorTitle">New Note</h3>
+                <button class="close-btn" id="closeNoteEditorBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-content note-editor-content">
+                <form id="noteEditorForm">
+                    <div class="form-group">
+                        <label for="noteTitle">Title</label>
+                        <input type="text" id="noteTitle" placeholder="Enter note title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="noteContent">Content</label>
+                        <textarea id="noteContent" placeholder="Write your note here..." rows="10" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-danger" id="deleteNoteBtn" style="display: none;">Delete Note</button>
+                        <div class="form-actions-right">
+                            <button type="button" class="btn-secondary" id="cancelNoteBtn">Cancel</button>
+                            <button type="submit" class="btn-primary">Save Note</button>
                         </div>
                     </div>
                 </form>
